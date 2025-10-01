@@ -8,7 +8,7 @@
         background-color: consts.$button-hover-color;
     }
     &.expired {
-        background-color: consts.$button-color;
+        background-color: consts.$button-disabled-color;
         cursor: not-allowed;
     }
     &.voted {

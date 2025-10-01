@@ -1,73 +1,104 @@
-# React + TypeScript + Vite
+# Frontend for Voting for Ideas Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for voting system built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
 
-## React Compiler
+-   Node.js (version 18 or higher)
+-   Backend server running (see backend README)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Installation & Setup
 
-## Expanding the ESLint configuration
+1. **Environment Configuration**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+    ```bash
+    cp .env.example .env
+    # Fill in your environment variables in the .env file
+    # VITE_BASE_URL should point to your backend server
+    # VITE_PORT should point to your backend port
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Install Dependencies**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    ```bash
+    npm install
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **Running the Application**
+
+    ```bash
+    # Development mode
+    npm run dev
+
+    # Production build
+    npm run build
+    npm run preview
+    ```
+
+---
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/     # React components
+│   │   ├── TheTable/      # Main table component
+│   │   ├── ListDataBar/   # Individual idea row
+│   │   └── UI/            # Reusable UI components
+│   ├── utils/          # Utility functions and API calls
+│   └── config/         # Configuration files
+|   |__ styles/         # Global SCSS styles
+├── public/             # Static assets
+└── .env.example        # Environment variables template
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Frontend Features
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+-   **Idea Display**: Shows all ideas with names, descriptions, and current vote counts.
+-   **Voting System**:
+    -   Vote buttons for each idea.
+    -   Visual feedback for already voted ideas ("voted" on disabled button).
+    -   Automatic disabling of all buttons after 10 votes.
+    -   Optimistic UI updates for instant feedback.
+-   **SCSS**: SCSS-based styling.
+-   **Error Handling**: User-friendly error messages for API failures.
+-   **Loading States**: Loading indicators during data fetching.
+
+---
+
+## Key Components
+
+-   **TheTable**: Main container that fetches and displays the list of ideas.
+-   **ListDataBar**: Individual row component for each idea.
+-   **CustomButton**: Reusable button with different states (vote/voted/expired).
+
+---
+
+## Technology Stack
+
+-   **Framework**: React with TypeScript
+-   **Build Tool**: Vite
+-   **Styling**: SCSS modules
+-   **HTTP Client**: Axios
+-   **State Management**: React hooks (`useState`, `useEffect`, `useCallback`)
+
+---
+
+## Environment Variables
+
+-   `VITE_BASE_URL` - Base URL for backend API
+-   `VITE_PORT` - Basde Port for backend API
+
+---
+
+## API Integration
+
+The frontend communicates with the backend through two main endpoints:
+
+-   `GET /api` - Retrieves all ideas with current vote status
+-   `POST /api/vote` - Submits a vote for a specific idea

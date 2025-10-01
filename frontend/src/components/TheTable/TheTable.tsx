@@ -7,6 +7,7 @@ const TheTable: React.FC = () => {
     const [dataList, setDataList] = useState<Idea[]>([]);
     const [expired, setExpired] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const handleVoteSuccess = useCallback((ideaId: string) => {
         setDataList((prevList) =>
@@ -36,6 +37,7 @@ const TheTable: React.FC = () => {
             setExpired(userVoted >= 10);
         } catch (error) {
             console.error("Error fetching ideas:", error);
+            setError("Failed to load ideas. Please try again later.");
         } finally {
             setIsLoading(false);
         }
@@ -47,6 +49,9 @@ const TheTable: React.FC = () => {
 
     if (isLoading) {
         return <div>Loading ideas...</div>;
+    }
+    if (error) {
+        return <div className="error-message">{error}</div>;
     }
     return (
         <ul className="table">
@@ -63,6 +68,7 @@ const TheTable: React.FC = () => {
                         itemData={item}
                         buttonType={expired ? "expired" : item.voted ? "voted" : "vote"}
                         onVoteSuccess={handleVoteSuccess}
+                        setError={setError}
                     />
                 ))}
         </ul>

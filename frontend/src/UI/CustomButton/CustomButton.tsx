@@ -6,9 +6,10 @@ type PropsButton = {
     value: string;
     ideaId: string;
     onVoteSuccess: (value: string) => void;
+    setError: (val: string) => void;
 };
 
-const CustomButton: React.FC<PropsButton> = ({ value, ideaId, onVoteSuccess }) => {
+const CustomButton: React.FC<PropsButton> = ({ value, ideaId, onVoteSuccess, setError }) => {
     const [isLoading, setIsLoading] = useState(false);
     const handleClick = async () => {
         if (value !== "vote") return;
@@ -17,7 +18,7 @@ const CustomButton: React.FC<PropsButton> = ({ value, ideaId, onVoteSuccess }) =
             onVoteSuccess(ideaId);
         } catch (error) {
             console.error("Failed to submit vote:", error);
-            // Можно добавить уведомление для пользователя
+            setError("Failed to submit vote. Please try again.");
         } finally {
             setIsLoading(false);
         }
