@@ -75,6 +75,10 @@ export const postUserVote = async (
             await tx.vote.create({
                 data: { ipAddressId: ipRec.id, ideaId },
             });
+            await tx.idea.update({
+                where: { id: ideaId },
+                data: { voteCount: { increment: 1 } },
+            });
 
             await tx.ipAddress.update({
                 where: { id: ipRec.id },

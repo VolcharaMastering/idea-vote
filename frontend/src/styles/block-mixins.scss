@@ -1,0 +1,71 @@
+@use "./consts" as consts;
+@use "./text-mixins" as text;
+
+// ------mixins for blocks
+@mixin flex_row($align: center, $justify: space-between, $gap: 0) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+}
+
+@mixin flex_column($align: center, $justify: space-between, $gap: 0) {
+    display: flex;
+    flex-direction: column;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+}
+
+@mixin gridAutoFill(
+    $place-items: flex-start center,
+    $justify: space-between,
+    $columns-number: "auto-fit",
+    $min-width: 300px,
+    $max-width: 1fr,
+    $gap: 10px
+) {
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: repeat($columns-number, minmax($min-width, $max-width));
+    justify-content: $justify;
+    place-items: $place-items;
+    gap: $gap;
+}
+
+@mixin button() {
+    border-radius: 10px;
+    @include text.button-text();
+    width: 50px;
+    height: 30px;
+    background-color: consts.$button-color;
+    color: consts.$button-text-color;
+    border: none;
+    transition: consts.$transition;
+}
+
+@mixin table-cell(
+    $width: 100%,
+    $height: 40px,
+    $align: center,
+    $justify: space-between,
+    $padding: 0 5%,
+    $border-bottom: 1px solid consts.$separator-color
+) {
+    @include flex_row($align: $align, $justify: $justify);
+    width: $width;
+    height: $height;
+    padding: $padding;
+    border-bottom: $border-bottom;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// ------special block decoration
+@mixin list-without-dots {
+    @include flex_row();
+    list-style-type: none;
+}

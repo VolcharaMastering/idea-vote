@@ -1,0 +1,33 @@
+@use "styles/block-mixins" as blocks;
+@use "styles/text-mixins" as texts;
+@use "styles/consts" as consts;
+
+#root {
+    max-width: 2400px;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+.app {
+    @include blocks.flex_column($align: center, $justify: start);
+    width: 100%;
+    height: 100vh;
+    flex: 1;
+
+    .main-title {
+        @include texts.title-text($text-color: consts.$h1-color);
+        margin-top: 60px;
+        margin-bottom: 20px;
+    }
+
+    .buttons-section {
+        max-width: fit-content;
+        width: 100%;
+        height: 100%;
+        @include blocks.flex_row($align: flex-start, $justify: space-between, $gap: 20px);
+    }
+}

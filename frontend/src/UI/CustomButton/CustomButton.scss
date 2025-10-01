@@ -1,0 +1,14 @@
+@use "../../styles/consts" as consts;
+@use "../../styles/block-mixins" as blocks;
+
+.button {
+    @include blocks.button();
+    cursor: pointer;
+    &:hover {
+        background-color: consts.$button-hover-color;
+    }
+    &.disabled {
+        background-color: consts.$button-disabled-color;
+        cursor: not-allowed;
+    }
+}

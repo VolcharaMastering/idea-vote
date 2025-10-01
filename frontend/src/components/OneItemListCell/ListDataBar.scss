@@ -1,0 +1,17 @@
+@import "../../styles/block-mixins.scss";
+
+// .list-cell {
+//     @include table-cell($align: center, $justify: space-between, $padding: 0 2%);
+//     .list-cell__item {
+//         @include text();
+//     }
+//     .list-cell__data {
+//         @include text($font-size: 14px);
+//         background-color: $active-background-color;
+//         border-radius: 10px;
+//         padding: 3px;
+//     }
+// }
+// .list-cell:last-of-type {
+//     border-bottom: none;
+// }
