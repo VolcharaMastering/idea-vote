@@ -4,11 +4,10 @@
     "description": "backent for ideas-voting proj",
     "main": "app.ts",
     "scripts": {
-        "prisma:generate": "prisma generate --schema=src/prisma/schema.prisma",
-        "seed": "npm run prisma:generate && node src/prisma/seed.js",
-        "seed2": "node src/prisma/seed.js",
+        "prisma:gen": "prisma generate --schema=src/prisma/schema.prisma && npx prisma migrate dev --name init --schema ./src/prisma/schema.prisma",
+        "seed": "node src/prisma/seed.js",
         "lint": "npx eslint .",
-        "dev": "npm run prisma:generate && nodemon app.ts",
+        "dev": "npm run prisma:gen && nodemon app.ts",
         "build": "npx tsc",
         "start": "node app.js"
     },
