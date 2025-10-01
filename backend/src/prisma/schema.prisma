@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Idea {
+  id        String   @id @default(cuid())
+  name      String
+  idea String @unique
+  voteCount Int      @default(0) 
+  createdAt DateTime @default(now())
+
+  votes     Vote[]
+}
+
+model IpAddress {
+  id         String  @id @default(cuid())
+  ip         String  @unique       
+  votesCount Int     @default(0)    
+
+  votes      Vote[]
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  ipAddressId  String
+  ideaId       String
+
+  ipAddress    IpAddress @relation(fields: [ipAddressId], references: [id])
+  idea         Idea      @relation(fields: [ideaId], references: [id])
+
+  @@unique([ipAddressId, ideaId])   // one Vote field = one ip has voted
+  @@index([ideaId])
+  @@index([ipAddressId])
+}

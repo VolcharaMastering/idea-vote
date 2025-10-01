@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "CommonJS",
+        "resolveJsonModule": true,
+        "outDir": "./backDist",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*", "src/prisma/**/*", "src/types/**/*"],
+    "files": ["src/types/global.d.ts"]
+}
