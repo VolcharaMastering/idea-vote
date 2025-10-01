@@ -3,10 +3,11 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import { Client } from 'pg';
 import router from './src/routes';
-import { notFound } from './src/errors/errors';
 import rateLimit from './src/utils/rateLimit';
 import { configureTrustProxy } from './src/utils/configureTrustProxy';
 import { getClientIp } from './src/middlewares/getClientIp';
+import errorHandler from './src/middlewares/errorHandler';
+import { NotFoundError } from './src/errors/errors';
 
 const {
     HTTP_PORT = 8081,
@@ -29,8 +30,9 @@ app.use(getClientIp);
 app.use(router);
 
 app.use((req, res, next) => {
-    next(notFound('Page not found'));
+    throw new NotFoundError();
 });
+app.use(errorHandler);
 
 // PostgreSQL connection via 'pg' package
 async function connect() {

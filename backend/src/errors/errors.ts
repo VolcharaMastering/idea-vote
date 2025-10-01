@@ -1,56 +1,73 @@
-import dictionary from "../context/errors.json";
+import dictionary from '../context/errors.json';
 
-const lang = "ru";
+const lang = 'ru';
 
 const {
-  authDefault,
-  rangeDefault,
-  serverDefault,
-  requestDefault,
-  notFoundDefault,
-  conflictDefault,
-  forbiddenDefault,
-  validationDefault,
+    authDefault,
+    rangeDefault,
+    serverDefault,
+    requestDefault,
+    notFoundDefault,
+    conflictDefault,
+    forbiddenDefault,
+    validationDefault,
 } = dictionary[lang];
 
-const createError = (message: string, errorCode: number) => {
-  if (!message || typeof message !== "string") {
-    throw new Error("Message should be a string");
-  }
+export class AppError extends Error {
+    constructor(public message: string, public statusCode: number) {
+        super(message);
+        this.name = this.constructor.name;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
 
-  if (typeof errorCode !== "number" || errorCode < 400 || errorCode > 599) {
-    throw new Error("Error code should be a number between 400 and 599");
-  }
+export class RequestError extends AppError {
+    constructor(message: string = requestDefault) {
+        super(message, 400);
+    }
+}
 
-  return new Response(JSON.stringify({ message, code: errorCode }), {
-    status: errorCode,
-    headers: { "Content-Type": "application/json" },
-  });
-};
+export class AuthError extends AppError {
+    constructor(message: string = authDefault) {
+        super(message, 401);
+    }
+}
 
-export const requestError = (message: string = requestDefault) =>
-  createError(message, 400);
+export class ForbiddenError extends AppError {
+    constructor(message: string = forbiddenDefault) {
+        super(message, 403);
+    }
+}
 
-export const authError = (message: string = authDefault) =>
-  createError(message, 401);
+export class NotFoundError extends AppError {
+    constructor(message: string = notFoundDefault) {
+        super(message, 404);
+    }
+}
 
-export const forbiddenError = (message: string = forbiddenDefault) =>
-  createError(message, 403);
+export class ConflictError extends AppError {
+    constructor(message: string = conflictDefault) {
+        super(message, 409);
+    }
+}
 
-export const notFound = (message: string = notFoundDefault) =>
-  createError(message, 404);
+export class RangeNotSatisfiableError extends AppError {
+    constructor(message: string = rangeDefault) {
+        super(message, 416);
+    }
+}
 
-export const conflictError = (message: string = conflictDefault) =>
-  createError(message, 409);
+export class UnprocessableEntityError extends AppError {
+    constructor(message: string = validationDefault) {
+        super(message, 422);
+    }
+}
 
-export const rangeNotSatisfiable = (message: string = rangeDefault) =>
-  createError(message, 416);
-
-export const unprocessableEntity = (message: string = validationDefault) =>
-  createError(message, 422);
-
-export const serverError = (message: string = serverDefault) =>
-  createError(message, 500);
+export class ServerError extends AppError {
+    constructor(message: string = serverDefault) {
+        super(message, 500);
+    }
+}
 
 /**
  * Returns a 400 Bad Request response with a given message.
