@@ -3,4 +3,5 @@ type Idea = {
     name: string;
     idea: string;
     voteCount: number;
+    voted: boolean;
 };

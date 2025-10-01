@@ -1,17 +1,31 @@
-@import "../../styles/block-mixins.scss";
+@use "../../styles/consts" as consts;
+@use "../../styles/block-mixins" as blocks;
+@use "../../styles/text-mixins" as texts;
 
-// .list-cell {
-//     @include table-cell($align: center, $justify: space-between, $padding: 0 2%);
-//     .list-cell__item {
-//         @include text();
-//     }
-//     .list-cell__data {
-//         @include text($font-size: 14px);
-//         background-color: $active-background-color;
-//         border-radius: 10px;
-//         padding: 3px;
-//     }
-// }
-// .list-cell:last-of-type {
-//     border-bottom: none;
-// }
+.list-cell {
+    width: 100%;
+    @include blocks.flex-row($justify: space-between, $align: center);
+    @include blocks.list-without-dots();
+    border-bottom: 1px solid consts.$separator-color;
+    padding: 30px 0;
+    height: 40px;
+    .list-cell-name {
+        width: 150px;
+        // @include texts.text($font-size: 14px);
+    }
+    .list-cell-text {
+        width: 500px;
+        // @include texts.text($font-size: 14px);
+    }
+    .list-cell-count {
+        width: 40px;
+        // @include texts.text($font-size: 14px);
+    }
+    .list-cell-button {
+        width: 100px;
+        // @include texts.text($font-size: 14px);
+    }
+}
+.list-cell:last-of-type {
+    border-bottom: none;
+}

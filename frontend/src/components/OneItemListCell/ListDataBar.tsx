@@ -4,15 +4,19 @@ import "./ListDataBar.scss";
 type PropsListDataBar = {
     itemData: Idea;
     buttonType?: "vote" | "voted" | "expired";
+    onVoteSuccess: (value: string) => void;
 };
-const ListDataBar: React.FC<PropsListDataBar> = ({ itemData, buttonType = "vote" }) => {
+const ListDataBar: React.FC<PropsListDataBar> = ({
+    itemData,
+    buttonType = "vote",
+    onVoteSuccess,
+}) => {
     return (
         <li className="list-cell">
-            <p className="list-cell__item">{itemData.name}</p>
-            <p className="list-cell__item">{itemData.idea}</p>
-            <p className="list-cell__item">{itemData.voteCount}</p>
-            <CustomButton value={buttonType} ideaId={itemData.id} />
-            {/* <p className="list-cell__data">{!itemData ? 0 : itemData}</p> */}
+            <p className="list-cell-name">{itemData.name}</p>
+            <p className="list-cell-text">{itemData.idea}</p>
+            <p className="list-cell-count">{itemData.voteCount}</p>
+            <CustomButton value={buttonType} ideaId={itemData.id} onVoteSuccess={onVoteSuccess} />
         </li>
     );
 };

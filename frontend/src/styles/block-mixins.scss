@@ -37,7 +37,7 @@
 @mixin button() {
     border-radius: 10px;
     @include text.button-text();
-    width: 50px;
+    width: 100px;
     height: 30px;
     background-color: consts.$button-color;
     color: consts.$button-text-color;

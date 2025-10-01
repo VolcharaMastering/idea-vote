@@ -1,0 +1,12 @@
+@use "../../styles/block-mixins" as blocks;
+@use "../../styles/consts" as consts;
+
+.table {
+    width: 100%;
+    height: 100%;
+    @include blocks.flex-column($justify: center, $align: center);
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid consts.$separator-color;
+    overflow-y: auto;
+}

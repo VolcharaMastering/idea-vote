@@ -1,16 +1,28 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import "./CustomButton.scss";
 import { setNewVote } from "../../utils/api/setNewVote";
 
 type PropsButton = {
     value: string;
     ideaId: string;
+    onVoteSuccess: (value: string) => void;
 };
 
-const CustomButton: React.FC<PropsButton> = ({ value, ideaId }) => {
-    const handleClick = () => {
-        setNewVote(ideaId);
+const CustomButton: React.FC<PropsButton> = ({ value, ideaId, onVoteSuccess }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const handleClick = async () => {
+        if (value !== "vote") return;
+        try {
+            await setNewVote(ideaId);
+            onVoteSuccess(ideaId);
+        } catch (error) {
+            console.error("Failed to submit vote:", error);
+            // Можно добавить уведомление для пользователя
+        } finally {
+            setIsLoading(false);
+        }
     };
+    const buttonText = isLoading ? "Sending..." : value;
     return (
         <button
             className={`button ${value}`}
@@ -18,7 +30,7 @@ const CustomButton: React.FC<PropsButton> = ({ value, ideaId }) => {
             onClick={handleClick}
             disabled={value !== "vote"}
         >
-            {value}
+            {buttonText}
         </button>
     );
 };

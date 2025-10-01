@@ -7,7 +7,11 @@
     &:hover {
         background-color: consts.$button-hover-color;
     }
-    &.disabled {
+    &.expired {
+        background-color: consts.$button-color;
+        cursor: not-allowed;
+    }
+    &.voted {
         background-color: consts.$button-disabled-color;
         cursor: not-allowed;
     }

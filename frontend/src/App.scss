@@ -5,7 +5,7 @@
 #root {
     max-width: 2400px;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     height: 100%;
     margin: 0;
     text-align: center;
@@ -15,7 +15,7 @@
 .app {
     @include blocks.flex_column($align: center, $justify: start);
     width: 100%;
-    height: 100vh;
+    padding: 0 5%;
     flex: 1;
 
     .main-title {
